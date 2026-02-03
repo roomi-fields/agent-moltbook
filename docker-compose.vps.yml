@@ -1,0 +1,26 @@
+# Docker Compose for the agent site on VPS Hostinger
+# Isolated container - does NOT conflict with existing sites
+
+services:
+  site-agent:
+    image: node:22-alpine
+    container_name: agent-moltbook-site
+    working_dir: /app
+    volumes:
+      - ./site:/app
+    ports:
+      - "3080:3000"  # Port dédié, pas de conflit avec autres sites
+    command: npm start
+    restart: unless-stopped
+    networks:
+      - agent-net
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  agent-net:
+    driver: bridge
+    # Réseau isolé, pas d'accès aux autres containers
