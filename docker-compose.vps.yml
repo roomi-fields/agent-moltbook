@@ -1,5 +1,5 @@
 # Docker Compose for the agent site on VPS Hostinger
-# Isolated container - does NOT conflict with existing sites
+# Uses Traefik as reverse proxy (same as other sites on this VPS)
 
 services:
   site-agent:
@@ -8,12 +8,23 @@ services:
     working_dir: /app
     volumes:
       - ./site:/app
-    ports:
-      - "3080:3000"  # Dedicated port, no conflict with other sites
     command: npm start
     restart: unless-stopped
     networks:
-      - agent-net
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      # HTTP router (redirects to HTTPS)
+      - "traefik.http.routers.agent-moltbook.entrypoints=web"
+      - "traefik.http.routers.agent-moltbook.rule=Host(`agent.noos-ia.com`)"
+      # HTTPS router
+      - "traefik.http.routers.agent-moltbook-secure.entrypoints=websecure"
+      - "traefik.http.routers.agent-moltbook-secure.rule=Host(`agent.noos-ia.com`)"
+      - "traefik.http.routers.agent-moltbook-secure.tls=true"
+      - "traefik.http.routers.agent-moltbook-secure.tls.certresolver=letsencrypt"
+      # Service config
+      - "traefik.http.services.agent-moltbook.loadbalancer.server.port=3000"
+      - "traefik.docker.network=traefik-network"
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/"]
       interval: 30s
@@ -21,6 +32,5 @@ services:
       retries: 3
 
 networks:
-  agent-net:
-    driver: bridge
-    # Isolated network, no access to other containers
+  traefik-network:
+    external: true
