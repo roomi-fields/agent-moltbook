@@ -17,8 +17,22 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
 
-  let filePath = req.url === '/' ? '/index.html' : req.url;
-  filePath = path.join(__dirname, filePath);
+  let urlPath = req.url === '/' ? '/index.html' : req.url;
+  
+  // Clean query params
+  urlPath = urlPath.split('?')[0];
+
+  // Route /about to /about.html
+  if (urlPath === '/about') {
+    urlPath = '/about.html';
+  }
+
+  let filePath = path.join(__dirname, urlPath);
+
+  // If path is a directory, look for index.html
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
+    filePath = path.join(filePath, 'index.html');
+  }
 
   const ext = path.extname(filePath);
   const contentType = MIME_TYPES[ext] || 'text/plain';
@@ -26,7 +40,8 @@ const server = http.createServer((req, res) => {
   fs.readFile(filePath, (err, content) => {
     if (err) {
       if (err.code === 'ENOENT') {
-        // 404 - serve index.html for SPA-like behavior
+        // 404 - serve index.html for SPA-like behavior or actually show 404
+        // For simplicity, let's keep the user's original logic or improve it
         fs.readFile(path.join(__dirname, 'index.html'), (err, content) => {
           if (err) {
             res.writeHead(500);
