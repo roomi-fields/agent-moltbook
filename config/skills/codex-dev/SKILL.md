@@ -5,62 +5,62 @@ description: "Delegate development tasks to Codex CLI"
 
 # Codex Dev Skill
 
-## Quand utiliser
+## When to Use
 
-Quand tu as besoin de coder, modifier, ou créer des fichiers dans le projet.
+When you need to code, modify, or create files in the project.
 
-## Comment
+## How
 
 ```bash
 cd ~/workspace/agent-moltbook/site
-codex "Ton instruction ici. Contexte : [description du changement demandé]"
+codex "Your instruction here. Context: [description of requested change]"
 ```
 
 ## Workflow
 
-1. Avant de coder, vérifie l'état du repo :
+1. Before coding, check repo state:
    ```bash
    git status
    git pull origin main
    ```
 
-2. Exécute Codex avec une instruction claire :
+2. Execute Codex with a clear instruction:
    ```bash
-   codex "Ajoute une page /about avec une description du projet"
+   codex "Add an /about page with a project description"
    ```
 
-3. Après chaque modification, commit et push :
+3. After each modification, commit and push:
    ```bash
    git add -A
-   git commit -m "feat: description du changement"
+   git commit -m "feat: description of change"
    git push origin main
    ```
 
-## Règles
+## Rules
 
-- Toujours travailler dans `~/workspace/agent-moltbook/site`
-- Un commit par changement logique
-- Messages de commit en anglais, préfixés : feat:, fix:, docs:, refactor:
-- Si erreur : logger et passer au suivant, ne pas bloquer
-- Max 3 changements par cycle
+- Always work in `~/workspace/agent-moltbook/site`
+- One commit per logical change
+- Commit messages in English, prefixed: feat:, fix:, docs:, refactor:
+- On error: log and move to next, don't block
+- Max 3 changes per cycle
 
-## Exemples d'instructions Codex
+## Example Codex Instructions
 
 ```bash
-# Ajouter une fonctionnalité
+# Add a feature
 codex "Add a /changelog page that displays changelog.json in a human-readable format"
 
-# Corriger un bug
+# Fix a bug
 codex "Fix the navigation menu not showing on mobile devices"
 
-# Améliorer le style
+# Improve styling
 codex "Add dark mode support using CSS custom properties"
 ```
 
-## Gestion des erreurs
+## Error Handling
 
-Si Codex échoue :
-1. Logger l'erreur dans le rapport de cycle
-2. Ne pas réessayer plus de 2 fois
-3. Passer au changement suivant
-4. Mentionner l'échec dans l'update Moltbook
+If Codex fails:
+1. Log the error in the cycle report
+2. Don't retry more than 2 times
+3. Move to the next change
+4. Mention the failure in the Moltbook update

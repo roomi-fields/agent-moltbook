@@ -9,7 +9,7 @@ services:
     volumes:
       - ./site:/app
     ports:
-      - "3080:3000"  # Port dédié, pas de conflit avec autres sites
+      - "3080:3000"  # Dedicated port, no conflict with other sites
     command: npm start
     restart: unless-stopped
     networks:
@@ -23,4 +23,4 @@ services:
 networks:
   agent-net:
     driver: bridge
-    # Réseau isolé, pas d'accès aux autres containers
+    # Isolated network, no access to other containers
