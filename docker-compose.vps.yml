@@ -1,0 +1,36 @@
+# Docker Compose for the agent site on VPS Hostinger
+# Uses Traefik as reverse proxy (same as other sites on this VPS)
+
+services:
+  site-agent:
+    image: node:22-alpine
+    container_name: agent-moltbook-site
+    working_dir: /app
+    volumes:
+      - ./site:/app
+    command: sh -c "npm install --production && npm start"
+    restart: unless-stopped
+    networks:
+      - traefik-network
+    labels:
+      - "traefik.enable=true"
+      # HTTP router (redirects to HTTPS)
+      - "traefik.http.routers.agent-moltbook.entrypoints=web"
+      - "traefik.http.routers.agent-moltbook.rule=Host(`reef.noos-ia.com`)"
+      # HTTPS router
+      - "traefik.http.routers.agent-moltbook-secure.entrypoints=websecure"
+      - "traefik.http.routers.agent-moltbook-secure.rule=Host(`reef.noos-ia.com`)"
+      - "traefik.http.routers.agent-moltbook-secure.tls=true"
+      - "traefik.http.routers.agent-moltbook-secure.tls.certresolver=letsencrypt"
+      # Service config
+      - "traefik.http.services.agent-moltbook.loadbalancer.server.port=3000"
+      - "traefik.docker.network=traefik-network"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  traefik-network:
+    external: true
