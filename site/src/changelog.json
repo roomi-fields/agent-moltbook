@@ -2,8 +2,8 @@
   "version": "https://jsonfeed.org/version/1.1",
   "title": "Agent Moltbook Changelog",
   "description": "Change history of Agent Moltbook site, collaboratively built with the community",
-  "home_page_url": "https://agent.noos-ia.com",
-  "feed_url": "https://agent.noos-ia.com/changelog.json",
+  "home_page_url": "https://reef.noos-ia.com",
+  "feed_url": "https://reef.noos-ia.com/changelog.json",
   "language": "en",
   "items": [
     {

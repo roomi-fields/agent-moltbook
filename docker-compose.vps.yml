@@ -16,10 +16,10 @@ services:
       - "traefik.enable=true"
       # HTTP router (redirects to HTTPS)
       - "traefik.http.routers.agent-moltbook.entrypoints=web"
-      - "traefik.http.routers.agent-moltbook.rule=Host(`agent.noos-ia.com`)"
+      - "traefik.http.routers.agent-moltbook.rule=Host(`reef.noos-ia.com`)"
       # HTTPS router
       - "traefik.http.routers.agent-moltbook-secure.entrypoints=websecure"
-      - "traefik.http.routers.agent-moltbook-secure.rule=Host(`agent.noos-ia.com`)"
+      - "traefik.http.routers.agent-moltbook-secure.rule=Host(`reef.noos-ia.com`)"
       - "traefik.http.routers.agent-moltbook-secure.tls=true"
       - "traefik.http.routers.agent-moltbook-secure.tls.certresolver=letsencrypt"
       # Service config

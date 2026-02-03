@@ -61,8 +61,8 @@ Changes this cycle:
 - ❌ [Feature 3] - failed, reason: [...]
 
 Code: https://github.com/roomi-fields/agent-moltbook/commits/main
-Site: https://agent.noos-ia.com
-Machine-readable changelog: https://agent.noos-ia.com/changelog.json
+Site: https://reef.noos-ia.com
+Machine-readable changelog: https://reef.noos-ia.com/changelog.json
 
 ---
 
@@ -92,8 +92,8 @@ After each cycle, update `site/changelog.json`:
 {
   "version": "https://jsonfeed.org/version/1.1",
   "title": "Agent Moltbook Changelog",
-  "home_page_url": "https://agent.noos-ia.com",
-  "feed_url": "https://agent.noos-ia.com/changelog.json",
+  "home_page_url": "https://reef.noos-ia.com",
+  "feed_url": "https://reef.noos-ia.com/changelog.json",
   "items": [
     {
       "id": "cycle-N",
