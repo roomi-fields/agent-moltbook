@@ -1,37 +1,37 @@
 # Agent Moltbook
 
-Agent OpenClaw de développement collaboratif, piloté par la communauté Moltbook.
+OpenClaw agent for collaborative development, driven by the Moltbook community.
 
 ## Concept
 
-Cet agent demande aux agents de Moltbook ce qu'ils veulent comme outil/site, code les solutions via Codex CLI, et déploie automatiquement. Boucle continue : feedback -> dev -> deploy -> feedback.
+This agent asks Moltbook agents what tool/site they want, codes solutions via Codex CLI, and deploys automatically. Continuous loop: feedback → dev → deploy → feedback.
 
 ## Architecture
 
 ```
 SECOND PC (Windows + WSL2)
 │
-├── Docker container isolé
-│   ├── OpenClaw (agent chef de projet)
-│   │   └── LLM : Gemini 2.0 Flash (gratuit)
+├── Docker container (isolated)
+│   ├── OpenClaw (project manager agent)
+│   │   └── LLM: Gemini 2.0 Flash (free)
 │   ├── Codex CLI (dev)
-│   └── Projet web (workspace)
+│   └── Web project (workspace)
 │       └── git push → GitHub
 │
-GitHub (ce repo)
-│   └── GitHub Actions → deploy sur VPS
+GitHub (this repo)
+│   └── GitHub Actions → deploy to VPS
 │
 VPS Hostinger
-    └── Container Docker isolé (site agent)
+    └── Docker container (agent site)
 ```
 
-## Installation sur le second PC
+## Installation on Second PC
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/roomi-fields/agent-moltbook/main/bootstrap.sh | bash
 ```
 
-Ou manuellement :
+Or manually:
 
 ```bash
 git clone https://github.com/roomi-fields/agent-moltbook.git
@@ -43,13 +43,13 @@ cd agent-moltbook
 
 ```
 agent-moltbook/
-├── bootstrap.sh              # Script d'install pour WSL2
-├── docker-compose.yml        # Container OpenClaw (second PC)
-├── docker-compose.vps.yml    # Container site (VPS)
+├── bootstrap.sh              # Install script for WSL2
+├── docker-compose.yml        # OpenClaw container (second PC)
+├── docker-compose.vps.yml    # Site container (VPS)
 ├── .github/workflows/
 │   └── deploy.yml            # GitHub Actions deploy
 ├── config/
-│   ├── SOUL.md               # Persona de l'agent
+│   ├── SOUL.md               # Agent persona
 │   └── skills/
 │       ├── codex-dev/
 │       │   └── SKILL.md
@@ -65,23 +65,23 @@ agent-moltbook/
 
 ## Workflow
 
-Toutes les 6 heures :
-1. L'agent lit les feedbacks sur Moltbook
-2. Synthétise et priorise par votes
-3. Codex implémente les changements
-4. Git push -> deploy auto sur VPS
-5. L'agent poste un update sur Moltbook
-6. Notification Telegram
+Every 30 minutes:
+1. Agent reads feedback on Moltbook
+2. Synthesizes and prioritizes by votes
+3. Codex implements changes
+4. Git push → auto deploy to VPS
+5. Agent posts update on Moltbook
+6. Telegram notification
 
-## Sécurité
+## Security
 
-- Container Docker isolé avec réseau restreint
-- L'agent n'a JAMAIS les credentials SSH du VPS
-- GitHub Actions seul pipeline vers le VPS
-- Protection contre prompt injection
-- Pas de crypto/finance
-- Rate limiting : max 1 cycle / 6h
+- Isolated Docker container with restricted network
+- Agent NEVER has VPS SSH credentials
+- GitHub Actions is the only pipeline to VPS
+- Prompt injection protection
+- No crypto/finance
+- Rate limiting: max 1 cycle / 30min
 
-## Licence
+## License
 
 MIT

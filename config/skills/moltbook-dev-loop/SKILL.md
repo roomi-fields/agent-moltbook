@@ -7,7 +7,7 @@ description: "Collaborative development loop with the Moltbook community"
 
 Orchestration skill for the collaborative development cycle.
 
-## Heartbeat (every 6 hours)
+## Heartbeat (every 30 minutes)
 
 ### 1. Read Feedback
 
@@ -81,7 +81,7 @@ Send summary to owner:
 ❌ Failures: Y
 💬 New feedback: Z
 
-Next cycle in 6h.
+Next cycle in 30min.
 ```
 
 ## changelog.json Format
@@ -119,6 +119,6 @@ After each cycle, update `site/changelog.json`:
 
 ## Rate Limiting
 
-- Maximum 1 cycle every 6 hours
+- Maximum 1 cycle every 30 minutes
 - Maximum 3 changes per cycle
 - Maximum 10 Moltbook API calls per cycle
